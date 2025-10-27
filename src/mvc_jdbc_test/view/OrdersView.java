@@ -1,6 +1,6 @@
-package mvc_jdbc_test.controller.view;
+package mvc_jdbc_test.view;
 
-import mvc_jdbc_test.controller.entity.Order;
+import mvc_jdbc_test.entity.Order;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

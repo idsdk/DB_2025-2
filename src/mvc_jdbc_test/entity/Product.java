@@ -1,4 +1,4 @@
-package mvc_jdbc_test.controller.entity;
+package mvc_jdbc_test.entity;
 
 public class Product {
     private String product_id;

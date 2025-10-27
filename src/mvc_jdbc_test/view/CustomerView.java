@@ -1,7 +1,6 @@
-package mvc_jdbc_test.controller.view;
+package mvc_jdbc_test.view;
 
-import mvc_jdbc_test.controller.entity.Customer;
-import mvc_jdbc_test.controller.entity.Order;
+import mvc_jdbc_test.entity.Customer;
 
 public class CustomerView {
     public String title = "고객 정보";

@@ -1,4 +1,4 @@
-package mvc_jdbc_test.controller.entity;
+package mvc_jdbc_test.entity;
 
 public class Customer {
     private String  customer_id;
