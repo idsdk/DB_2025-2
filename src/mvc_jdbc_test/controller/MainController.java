@@ -4,9 +4,7 @@ import jdbc_test.JDBCConnector;
 import mvc_jdbc_test.entity.Customer;
 import mvc_jdbc_test.entity.Order;
 import mvc_jdbc_test.entity.Product;
-import mvc_jdbc_test.view.CustomerView;
-import mvc_jdbc_test.view.InputCustomerInfoView;
-import mvc_jdbc_test.view.OrdersView;
+import mvc_jdbc_test.view.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,8 +16,33 @@ import java.util.Scanner;
 public class MainController {
     public static void main(String[] args) {
         Connection con = JDBCConnector.getConnection();
+        Scanner sc = new Scanner(System.in);
 //        mycode(con);
-        inputCustomerAndView(con);
+//        inputCustomerAndView(con);
+
+        while (true) {
+            System.out.println("\n======== 고객 관리 =========");
+            System.out.println("1. 고객 정보 수정");
+            System.out.println("2. 고객 정보 삭제");
+            System.out.println("3. 종료");
+            System.out.print("메뉴 선택: ");
+
+            String choice = sc.nextLine();
+
+            switch (choice) {
+                case "1":
+                    updateCustomerInfo(con);
+                    break;
+                case "2":
+                    deleteCustomerInfo(con);
+                    break;
+                case "3":
+                    System.out.println("프로그램 종료");
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다.");
+            }
+        }
     }
 
     public static void orderListAndView(Connection con){
@@ -114,5 +137,62 @@ public class MainController {
             }
         }
         System.out.println("프로그램이 종료 되었습니다. !!!");
+    }
+
+    public static void updateCustomerInfo(Connection con) {
+        Scanner sc = new Scanner(System.in);
+        UpdateCustomerView updateView = new UpdateCustomerView();
+
+        while (true){
+            Customer updatedCustomer = updateView.updateCustomerInput(con);
+
+            if (updatedCustomer == null) return;
+
+            String sql = "update 고객 set 고객이름=?, 나이=?, 등급?, 직업=?, 적립금=? where 고객아이디=?";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, updatedCustomer.getCustomer_name());
+                ps.setInt(2, updatedCustomer.getAge());
+                ps.setString(3, updatedCustomer.getLevel());
+                ps.setString(4, updatedCustomer.getJob());
+                ps.setInt(5, updatedCustomer.getReward());
+                ps.setString(6, updatedCustomer.getCustomer_id());
+
+                int result = ps.executeUpdate();
+                if (result > 0) {
+                    System.out.println("고객정보 수정 완료");
+                } else {
+                    System.out.println("수정 실패: 해당 고객을 찾을 수 없습니다.");
+                }
+                ps.close();
+
+            } catch (SQLException e) {
+                System.out.println("SQL 오류 발생: " +  e.getMessage());
+            }
+        }
+
+    }
+
+    public static void deleteCustomerInfo(Connection con) {
+        DeleteCustomerView deleteView = new DeleteCustomerView();
+        String deleteTargetId = deleteView.deleteCustomerInput(con);
+
+        if (deleteTargetId == null) return;
+
+        String sql = "delete from 고객 where 고객아이디 = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, deleteTargetId);
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("고객정보가 삭제되었습니다.");
+            } else {
+                System.out.println("삭제 실패: 고객을 찾을 수 없습니다.");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("SQL 오류: " + e.getMessage());
+        }
     }
 }
