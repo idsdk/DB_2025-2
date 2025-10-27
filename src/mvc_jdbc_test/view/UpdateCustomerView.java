@@ -37,7 +37,7 @@ public class UpdateCustomerView {
             customer.setReward(rs.getInt("적립금"));
 
             System.out.println("\n======= 기존 고객 정보 =======");
-            System.out.printf("고객아이디 : %s\n", customer.getCustomer_name());
+            System.out.printf("고객아이디 : %s\n", customer.getCustomer_id());
             System.out.printf("고객이름 : %s\n", customer.getCustomer_name());
             System.out.printf("고객나이 : %d\n", customer.getAge());
             System.out.printf("등급 : %s\n", customer.getLevel());

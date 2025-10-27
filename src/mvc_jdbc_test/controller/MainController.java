@@ -151,7 +151,7 @@ public class MainController {
 
             if (updatedCustomer == null) return;
 
-            String sql = "update 고객 set 고객이름=?, 나이=?, 등급?, 직업=?, 적립금=? where 고객아이디=?";
+            String sql = "update 고객 set 고객이름=?, 나이=?, 등급=?, 직업=?, 적립금=? where 고객아이디=?";
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setString(1, updatedCustomer.getCustomer_name());
