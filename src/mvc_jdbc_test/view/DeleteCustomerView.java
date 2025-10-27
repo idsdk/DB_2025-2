@@ -16,8 +16,10 @@ public class DeleteCustomerView {
             ps.setString(1, customerId);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            if (!rs.next()) {
                 System.out.println("해당 고객이 존재하지 않습니다.");
+                rs.close();
+                ps.close();
                 return null;
             }
 

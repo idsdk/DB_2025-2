@@ -69,7 +69,7 @@ public class MainController {
             }
             rs.close();
             ps.close();
-            con.close();
+//            con.close();333
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -163,7 +163,6 @@ public class MainController {
 
                 int result = ps.executeUpdate();
                 if (result > 0) {
-                    con.commit();
                     System.out.println("고객정보 수정 완료");
                 } else {
                     System.out.println("수정 실패: 해당 고객을 찾을 수 없습니다.");
@@ -191,7 +190,7 @@ public class MainController {
         while (true){
             String deleteTargetId = deleteView.deleteCustomerInput(con);
 
-            if (deleteTargetId == null) return;
+            if (deleteTargetId == null) break;
 
             String sql = "delete from 고객 where 고객아이디 = ?";
             try {
@@ -200,7 +199,6 @@ public class MainController {
                 int result = ps.executeUpdate();
 
                 if (result > 0) {
-                    con.commit();
                     System.out.println("고객정보가 삭제되었습니다.");
                 } else {
                     System.out.println("삭제 실패: 고객을 찾을 수 없습니다.");
