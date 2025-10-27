@@ -163,6 +163,7 @@ public class MainController {
 
                 int result = ps.executeUpdate();
                 if (result > 0) {
+                    con.commit();
                     System.out.println("고객정보 수정 완료");
                 } else {
                     System.out.println("수정 실패: 해당 고객을 찾을 수 없습니다.");
@@ -199,6 +200,7 @@ public class MainController {
                 int result = ps.executeUpdate();
 
                 if (result > 0) {
+                    con.commit();
                     System.out.println("고객정보가 삭제되었습니다.");
                 } else {
                     System.out.println("삭제 실패: 고객을 찾을 수 없습니다.");
