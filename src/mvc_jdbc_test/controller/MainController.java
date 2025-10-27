@@ -172,30 +172,48 @@ public class MainController {
             } catch (SQLException e) {
                 System.out.println("SQL 오류 발생: " +  e.getMessage());
             }
-        }
+            System.out.print("프로그램 종료를 원하면 e를 입력: ");
 
-    }
+            String input = sc.nextLine();
+
+            if (input.equals("e")) {
+                break;
+            }
+        }
+        System.out.println("프로그램이 종료 되었습니다. !!!");
+        }
 
     public static void deleteCustomerInfo(Connection con) {
+        Scanner sc = new Scanner(System.in);
         DeleteCustomerView deleteView = new DeleteCustomerView();
-        String deleteTargetId = deleteView.deleteCustomerInput(con);
 
-        if (deleteTargetId == null) return;
+        while (true){
+            String deleteTargetId = deleteView.deleteCustomerInput(con);
 
-        String sql = "delete from 고객 where 고객아이디 = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, deleteTargetId);
-            int result = ps.executeUpdate();
+            if (deleteTargetId == null) return;
 
-            if (result > 0) {
-                System.out.println("고객정보가 삭제되었습니다.");
-            } else {
-                System.out.println("삭제 실패: 고객을 찾을 수 없습니다.");
+            String sql = "delete from 고객 where 고객아이디 = ?";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, deleteTargetId);
+                int result = ps.executeUpdate();
+
+                if (result > 0) {
+                    System.out.println("고객정보가 삭제되었습니다.");
+                } else {
+                    System.out.println("삭제 실패: 고객을 찾을 수 없습니다.");
+                }
+                ps.close();
+            } catch (SQLException e) {
+                System.out.println("SQL 오류: " + e.getMessage());
             }
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println("SQL 오류: " + e.getMessage());
+
+            System.out.print("프로그램 종료를 원하면 e를 입력: ");
+            String input = sc.nextLine();
+            if (input.equalsIgnoreCase("e")) {
+                break;
+            }
         }
+        System.out.println("프로그램이 종료되었습니다.");
     }
 }
