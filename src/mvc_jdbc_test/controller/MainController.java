@@ -22,21 +22,24 @@ public class MainController {
 
         while (true) {
             System.out.println("\n======== 고객 관리 =========");
-            System.out.println("1. 고객 정보 수정");
-            System.out.println("2. 고객 정보 삭제");
-            System.out.println("3. 종료");
+            System.out.println("1. 고객 정보 등록");
+            System.out.println("2. 고객 정보 수정");
+            System.out.println("3. 고객 정보 삭제");
+            System.out.println("4. 종료");
             System.out.print("메뉴 선택: ");
 
             String choice = sc.nextLine();
 
             switch (choice) {
                 case "1":
-                    updateCustomerInfo(con);
+                    inputCustomerAndView(con);
                     break;
                 case "2":
-                    deleteCustomerInfo(con);
+                    updateCustomerInfo(con);
                     break;
                 case "3":
+                    deleteCustomerInfo(con);
+                case "4":
                     System.out.println("프로그램 종료");
                     return;
                 default:
